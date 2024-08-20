@@ -1,10 +1,13 @@
-// Fonction Add list
+// Function to add an item to the list
 document.getElementById('addList').addEventListener('click', function() {
+    // Get and trim input values
     const Items = document.getElementById('Items').value.trim();
     const Quantity = parseInt(document.getElementById('Quantity').value.trim());
     const Price = parseFloat(document.getElementById('Price').value.trim());
 
+    // Check if all fields are filled
     if (Items && Quantity && Price) {
+        // Calculate the total price for the row
         const total = Quantity * Price;
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -14,7 +17,7 @@ document.getElementById('addList').addEventListener('click', function() {
             <td class="total">${total.toFixed(2)}$</td>
             <td><button class="btn btn-warning text-white btn-sm remove-task">Remove</button></td>`;
         
-        // Ajoutez la nouvelle ligne au tableau
+        // Add the new row to the table
         document.getElementById('taskList').appendChild(tr);
         
         // Clear input fields
@@ -22,32 +25,32 @@ document.getElementById('addList').addEventListener('click', function() {
         document.getElementById('Quantity').value = '';
         document.getElementById('Price').value = '';
         
-        // Ajouter un écouteur d'événement pour le bouton de suppression
+        // Add event listener to the remove button
         tr.querySelector('.remove-task').addEventListener('click', function() {
-            // Afficher la boîte de confirmation avant de supprimer la ligne
-            const confirmation = confirm('Are you sure you want to remove this item?');
-            if (confirmation) {
+            // Show confirmation dialog before removing the row
+            if (confirm('Are you sure you want to remove this item?')) {
                 tr.remove();
-                calculateTotal(); // Recalculer le total après suppression
+                calculateTotal(); // Recalculate total after removal
+                alert('Item removed successfully!'); // Show alert after removal
             }
         });
 
-        calculateTotal(); // Recalculer le total après ajout
+        calculateTotal(); // Recalculate total after adding
     } else {
-        alert('Please fill out all fields');
+        alert('Please fill out all fields'); // Alert if any fields are empty
     }
 });
 
-// Fonction pour calculer le total général
+// Function to calculate the total amount
 function calculateTotal() {
     let grandTotal = 0;
     document.querySelectorAll('#taskList .total').forEach(function(cell) {
         const rowTotal = parseFloat(cell.innerText.replace('$', ''));
         if (!isNaN(rowTotal)) {
-            grandTotal += rowTotal;
+            grandTotal += rowTotal; // Sum up the total amounts
         }
     });
-    // Mise à jour des éléments de total général
+    // Update total elements
     document.getElementById('total').innerText = grandTotal.toFixed(2) + '$';
     document.getElementById('GrandTotal').innerText = grandTotal.toFixed(2) + '$';
 }
