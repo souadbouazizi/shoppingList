@@ -12,7 +12,7 @@ document.getElementById('addList').addEventListener('click', function() {
             <td>${Quantity}</td>
             <td>${Price.toFixed(2)}$</td>
             <td class="total">${total.toFixed(2)}$</td>
-            <td><button class="btn btn-danger btn-sm remove-task">Remove</button></td>`;
+            <td><button class="btn btn-warning text-white btn-sm remove-task">Remove</button></td>`;
         
         // Ajoutez la nouvelle ligne au tableau
         document.getElementById('taskList').appendChild(tr);
