@@ -27,12 +27,25 @@ document.getElementById('addList').addEventListener('click', function() {
         
         // Add event listener to the remove button
         tr.querySelector('.remove-task').addEventListener('click', function() {
-            // Show confirmation dialog before removing the row
-            if (confirm('Are you sure you want to remove this item?')) {
-                tr.remove();
-                calculateTotal(); // Recalculate total after removal
-                alert('Item removed successfully!'); // Show alert after removal
-            }
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    tr.remove();
+                    calculateTotal(); // Recalculate total after removal
+                    Swal.fire(
+                        'Deleted!',
+                        'Your item has been removed.',
+                        'success'
+                    );
+                }
+            });
         });
 
         calculateTotal(); // Recalculate total after adding
